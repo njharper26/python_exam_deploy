@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <title>User Profile</title>
+    </head>
+    <body>
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <br>
+        <div class="row justify-content-between">
+                <div class="col ml-5">
+                    <h1>{{ user.username }}</h1>
+                </div>
+                <div class="col-3 mr-5">
+                    <nav class="navbar navbar-light">
+                        <a class="nav-item nav-link" href="/quotes">Quotes Dashboard</a>
+                        <a class="nav-item nav-link" href="/logout">Logout</a>
+                    </nav>
+                </div>
+            </div>
+            <br>
+            <br>
+        <div class="row justify-content-start">
+            <div class="col-5 ml-5">
+                <h4>User Info:</h4>
+                <ul class="list-group border border-dark">
+                    <li class="list-group-item">Name: {{ user.first_name }} {{ user.last_name }}</li>
+                    <li class="list-group-item">Email: {{ user.email }}</li>
+                    <li class="list-group-item">Posted Quotes: {{ p }}</li>
+                    <li class="list-group-item">Favorite Quotes: {{ f }}</li>
+                </ul>  
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-5 ml-5">    
+                <h4>Posted Quotes:</h4>
+                <ul class="list-group border border-primary" style="max-height: 400px; overflow-y: scroll;">
+                    {% for quote in posts %}
+                    <li class="list-group-item">{{ quote.quote }}<span class="font-weight-bold"> - {{ quote.author.name }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-5 mr-5">    
+                <h4>Favorite Quotes:</h4>
+                <ul class="list-group border border-info" style="max-height: 400px; overflow-y: scroll;">
+                    {% for quote in posts %}
+                    <li class="list-group-item">{{ quote.quote }}<span class="font-weight-bold"> - {{ quote.author.name }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

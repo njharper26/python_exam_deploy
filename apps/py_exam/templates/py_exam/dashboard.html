@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <title>Quotes Dashboard</title>
+    </head>
+    <body>
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <br>
+        <div class="row justify-content-around">
+            <div class="col-7">
+                <h1>Quotable Quotes</h1>
+            </div>
+            <div class="col-3">
+                <nav class="navbar navbar-light">
+                    <a class="navbar-brand" href="/user/{{ user.id }}">{{ user.username }}</a>
+                    <a class="nav-item nav-link" href="/logout">Logout</a>
+                </nav>
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-around">
+            <div class="col-5">
+                <h3>Other Quotes...</h3>
+                <div class="container border border-dark" style="height: 800px; overflow-y: scroll;">
+                <br>
+                    {% for quote in others %}
+                    <div class="w-100 p-2 border border-primary">
+                        <p class"text-justify" >{{ quote.author.name }}: {{ quote.quote }}</p>
+                        <p class="font-italic d-inline">Posted by: <a href="/user/{{ quote.posted_by.id }}" class="mr-3">{{ quote.posted_by.username }}</a></p>
+                        <a href="/proccess/favorite/{{ quote.id }}" class="btn btn-light btn-sm ml-5 border border-dark" role="button">Add to Favs</a><span class="ml-3"> {{ quote.favorites.count }} Favs!</span>  
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-5">
+                <h3>Favorite Quotes!</h3>
+                <div class="container border border-dark" style="height: 400px; overflow-y: scroll;">
+                <br>
+                    {% for quote in favorites %}
+                    <div class="w-100 p-2 border border-info">
+                        <p class"text-justify" >{{ quote.author.name }}: {{ quote.quote }}</p>
+                        <p class="font-italic d-inline">Posted by: <a href="/user/{{ quote.posted_by.id }}"class="mr-3">{{quote.posted_by.username }}</a></p>
+                        <a href="/proccess/remove/{{ quote.id }}" class="btn btn-light btn-sm ml-5 border border-dark" role="button">Remove from Favs</a><span class="ml-3"> {{ quote.favorites.count }} Favs!</span>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                <br>
+                <h4>Post a New Quote:</h4>
+                <form action="/proccess/add" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <div class="form-group">
+                        <label for="input_author">Author:</label>
+                        <input type="text" class="form-control" id="input_author" name="author" placeholder="Enter Author*">                            
+                    </div>
+                    <div class="form-group">
+                        <label for="input_quote">Quote:</label>
+                        <textarea class="form-control" id="input_quote" rows="4" name="quote" placeholder="Enter Quote*"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="add_favs" value"True">
+                          Add to My Favorite Quotes
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Quote</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

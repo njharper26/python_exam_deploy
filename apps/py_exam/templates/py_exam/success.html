@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <title>Log/Reg Success</title>
+    </head>
+    <body>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <br>        
+        <div class="row">
+            <div class="col">  
+                <h2>Welcome, {{ user.username }}!!!</h2>
+                <br>
+                <h4>You are now logged in as User ID# {{ user.id }}</h5>
+                <br>
+                <br>
+                <h5>Please use the links below to navigate to specifice site pages...</h5>
+                <br>
+                <div class="list-group"></div>
+                    <a href="/quotes" class="list-group-item active">Quotes Dashboard</a>
+                    <a href="/user/{{ user.id }}" class="list-group-item list-group-item-action">{{ user.username}} Profile Page</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
